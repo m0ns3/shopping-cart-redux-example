@@ -11,10 +11,19 @@ function App() {
   const API_URL = process.env.REACT_APP_API_URL_FIREBASE;
 
   useEffect(() => {
-    fetch(`${API_URL}/cart.json`, {
-      method: "PUT",
-      body: JSON.stringify(cart),
-    });
+    sendCartData = async () => {
+      const response = await fetch(`${API_URL}/cart.json`, {
+        method: "PUT",
+        body: JSON.stringify(cart),
+      });
+
+      if (!response.ok) {
+        throw new Error("Sending cart data failed.");
+      }
+
+      const responseData = await response.json();
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
 
