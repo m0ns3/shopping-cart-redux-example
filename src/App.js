@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { uiActions } from "./store/ui-slice";
 import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 
 function App() {
+  const dispatch = useDispatch();
   const showCart = useSelector((state) => state.ui.cartIsVisible);
   const cart = useSelector((state) => state.cart);
 
@@ -12,6 +14,13 @@ function App() {
 
   useEffect(() => {
     sendCartData = async () => {
+      dispatch(
+        uiActions.showNotification({
+          status: "pending",
+          title: "Sending...",
+          message: "Sending cart data",
+        })
+      );
       const response = await fetch(`${API_URL}/cart.json`, {
         method: "PUT",
         body: JSON.stringify(cart),
