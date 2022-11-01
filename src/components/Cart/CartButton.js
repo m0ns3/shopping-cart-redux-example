@@ -13,7 +13,7 @@ const CartButton = (props) => {
       }}
     >
       <span>My Cart</span>
-      <span className={classes.badge}>{cartQuantity}</span>
+      <span className={classes.badge}>{cartQuantity ? cartQuantity : 0}</span>
     </button>
   );
 };
